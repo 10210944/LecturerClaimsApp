@@ -1,0 +1,66 @@
+﻿@model IEnumerable<LecturerClaimsApp.Models.LecturerClaim>
+
+<div class="container mt-4">
+    <h2>Manage Lecturer Claims</h2>
+
+    <!-- Link to Create a New Claim -->
+    <div class="mb-4">
+        <a asp-action="Create" class="btn btn-primary">Submit a New Claim</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Lecturer</th>
+                <th>Hours Worked</th>
+                <th>Hourly Rate</th>
+                <th>Notes</th>
+                <th>Total Amount</th>
+                <th>Document</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th>Rejection Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.LecturerName</td>
+                    <td>@claim.HoursWorked</td>
+                    <td>@claim.HourlyRate</td>
+                    <td>@claim.AdditionalNotes</td>
+                    <td>@claim.TotalAmount</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                        {
+                            <a href="@claim.DocumentPath" target="_blank">View Document</a>
+                        }
+                    </td>
+                    <td>@claim.Status</td>
+                    <td>
+                        @if (claim.Status == "Pending")
+                        {
+                            <!-- Approve Claim Button -->
+                            <form asp-action="Approve" asp-route-id="@claim.ClaimId" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                            </form>
+
+                            <!-- Reject Claim Form -->
+                            <form asp-action="Reject" asp-route-id="@claim.ClaimId" method="post" class="d-inline">
+                                <input type="text" name="rejectionReason" placeholder="Rejection Reason" required class="form-control form-control-sm" />
+                                <button type="submit" class="btn btn-danger btn-sm mt-2">Reject</button>
+                            </form>
+                        }
+                    </td>
+                    <td>
+                        @if (claim.Status == "Rejected")
+                        {
+                            <span>@claim.RejectionReason</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

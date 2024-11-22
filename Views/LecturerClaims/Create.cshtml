@@ -1,0 +1,53 @@
+﻿@model LecturerClaimsApp.Models.LecturerClaim
+
+<h2>Submit a New Claim</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="LecturerName">Lecturer Name</label>
+        <input type="text" class="form-control" id="LecturerName" name="LecturerName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="HoursWorked">Hours Worked</label>
+        <input type="number" class="form-control" id="HoursWorked" name="HoursWorked" required oninput="calculateTotal()" />
+    </div>
+
+    <div class="form-group">
+        <label for="HourlyRate">Hourly Rate</label>
+        <input type="number" step="0.01" class="form-control" id="HourlyRate" name="HourlyRate" required oninput="calculateTotal()" />
+    </div>
+
+    <div class="form-group">
+        <label for="AdditionalNotes">Additional Notes</label>
+        <textarea class="form-control" id="AdditionalNotes" name="AdditionalNotes"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="TotalAmount">Total Amount ($)</label>
+        <input type="text" class="form-control" id="TotalAmount" name="TotalAmount" value="" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="DocumentPath">Document Path (Optional)</label>
+        <input type="text" class="form-control" id="DocumentPath" name="DocumentPath" />
+    </div>
+
+    <!-- Rejection Reason (Optional) -->
+    <div class="form-group">
+        <label for="RejectionReason">Rejection Reason (Optional)</label>
+        <input type="text" class="form-control" id="RejectionReason" name="RejectionReason" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    function calculateTotal() {
+        var hoursWorked = parseFloat(document.getElementById("HoursWorked").value) || 0;
+        var hourlyRate = parseFloat(document.getElementById("HourlyRate").value) || 0;
+        var totalAmount = hoursWorked * hourlyRate;
+
+        document.getElementById("TotalAmount").value = totalAmount.toFixed(2);  // Format to two decimal places
+    }
+</script>
