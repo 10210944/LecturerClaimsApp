@@ -1,3 +1,13 @@
+Lecturer Claims Application
+Overview
+The Lecturer Claims Application is a web-based tool designed for lecturers to submit, manage, and review claims for hours worked. It supports functionalities such as creating claims, auto-approvals for certain conditions, and maintaining secure user-specific data.
+
+This application includes:
+
+User registration and authentication
+Persistent data storage using SQL Server
+Interactive calculation of claims with automated logic for approvals/rejections
+Modular design for scalability and future enhancements
 Setup Instructions
 1. Clone the Repository
 2. Configure Database
